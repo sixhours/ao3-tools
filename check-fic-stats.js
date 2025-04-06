@@ -7,6 +7,14 @@
 	const objectStoreName = 'ao3FicStats';
 
 	const checkFicStats = function() {
+		let messageContainer = document.querySelector( '#ao3-tools-messages' );
+		// Create message container if it doesn't exist.
+		if ( messageContainer ) {
+			messageContainer.remove();
+		}
+		messageContainer = createMessageContainer();
+		document.body.prepend( messageContainer );
+
 		const request = indexedDB.open( databaseName, 1 );
 		request.onerror = function( event ) {
 			console.log( 'Database error: ', event.target.logCode );
@@ -40,21 +48,12 @@
 				return;
 			}
 
-			let messageContainer = document.querySelector( '#ao3-stats-counter-messages' );
-			// Create message container if it doesn't exist.
-			if ( ! messageContainer ) {
-				messageContainer = createMessageContainer();
-			}
-			document.body.prepend( messageContainer );
-
 			// Get all fics on the page.
 			let fics = document.querySelectorAll( '.statistics .fandom .index.group li' );
 			if ( ! fics || fics.length === 0 ) {
 				console.log( 'No fics found to update.' );
 				return;
 			}
-
-			let allUpdates = [];
 
 			fics.forEach( ( fic ) => {
 				const title = fic.querySelector( 'dt a' )?.textContent;
@@ -79,7 +78,7 @@
 					if ( record ) {
 						// Compare and add message if there are changes.
 						if ( record.hits !== currentHits || record.bookmarks !== currentBookmarks || record.subscriptions !== currentSubscriptions ) {
-							messageText = `<strong><a href="${ url }" target="_blank">${ title }</a>:</strong><ul>`;
+							messageText = `<div><strong><a href="${ url }" target="_blank">${ title }</a>:</strong><ul>`;
 
 							if ( record.hits !== currentHits ) {
 								messageText += `<li>${ currentHits - record.hits } new hit${
@@ -96,11 +95,10 @@
 									( currentSubscriptions - record.subscriptions ) !== 1 ? 's' : '' }</a></li>`;
 							}
 
-							messageText += '</ul>';
+							messageText += '</ul></div>';
 
-							const message = createMessage( messageText );
-
-							allUpdates.push( message );
+							const message = createMessage( messageText, true );
+							messageContainer.appendChild( message );
 						}
 					}
 
@@ -112,16 +110,6 @@
 					console.log( 'Error reading record: ', event.target.logCode );
 				};
 			} );
-
-			if ( allUpdates.length > 0 ) {
-				uniqueUpdates = [ ...new Set( allUpdates ) ]; // Remove duplicates if any
-				uniqueUpdates.forEach( msg => {
-					messageContainer.appendChild( msg );
-				} );
-			} else {
-				noUpdates = createMessage( 'No updates found for any fics.' );
-				messageContainer.appendChild( noUpdates );
-			}
 
 			function setFicStats( title, subscriptions, bookmarks, hits ) {
 				const db = request.result;
