@@ -1,0 +1,36 @@
+#ao3-tools-messages {
+	display: flex;
+	flex-direction: column;
+	gap: 10px; /* Space between messages */
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	z-index: 1000;
+	width: 300px;
+}
+
+.ao3-tools-message {
+	opacity: 1;
+	transition: opacity 0.5s ease-in-out;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	font-size: 12px;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 10px;
+}
+
+.ao3-tools-message button {
+	background: none;
+	border: none;
+	box-shadow: none;
+	padding: 0;
+	cursor: pointer;
+	font-size: 12px;
+	line-height: 12px;
+	height: 12px;
+	width: 12px;
+}
