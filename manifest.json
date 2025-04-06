@@ -1,0 +1,29 @@
+{
+	"name": "AO3 Tools",
+	"description": "Keep track of your hits, subscriptions, and bookmarks, or copy fic details to Archive of Our Own (AO3).",
+	"author": "Caroline Moore",
+	"version": "0.1",
+	"manifest_version": 3,
+	"action": {
+		"default_icon": "ao3-stats.png"
+	},
+	"permissions": [
+		"activeTab",
+		"scripting",
+		"tabs"
+	],
+	"host_permissions": [
+		"https://archiveofourown.org/*"
+	],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"matches": [ "https://archiveofourown.org/users/*/stats*", "https://archiveofourown.org/works/*" ],
+			"css": [ "style.css" ],
+			"js": [ "helpers.js" ],
+			"run_at": "document_end"
+		}
+	]
+}
