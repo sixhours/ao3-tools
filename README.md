@@ -18,7 +18,7 @@ This Chrome browser extension does three things:
 
 ### Check your stats
 
-1. With the extension enabled, visit your AO3 stats page at `https://archiveofourown.org/users/[your-user]/stats` replacing [your-user] with your AO3 user.
+1. With the extension enabled, visit your AO3 stats page at `https://archiveofourown.org/users/[your-user]/stats` replacing `[your-user]` with your AO3 user.
 2. Click the AO3T button in your browser toolbar. If it's your first time using the tool, this will load your fics and their data into browser storage.
 4. When you want to check for changes, visit the stats page and click the AO3T button. You'll see notices in the bottom left corner of your browser listing the fics that have changed and their stats.
 
@@ -27,7 +27,7 @@ This Chrome browser extension does three things:
 1. View a single fic on AO3, like https://archiveofourown.org/works/59396569.
 2. Click the AO3T button in your browser toolbar.
 3. You'll see a notice in the bottom left corner of the browser confirming the fic's title, author, word count, tags, and other details have been copied to the clipboard.
-4. Go to your fic-tracking spreadsheet ([Feel free to use my template](https://docs.google.com/spreadsheets/d/1lpPIOWiQ32RmaGQ6j5KGIdUqAHowMujEucpRo6kwX0g/edit?gid=1336247201#gid=1336247201)) and Edit -> Paste the details into a new row. 
+4. Go to your fic-tracking spreadsheet ([feel free to use my template if you'd like](https://docs.google.com/spreadsheets/d/1lpPIOWiQ32RmaGQ6j5KGIdUqAHowMujEucpRo6kwX0g/edit?gid=1336247201#gid=1336247201)) and Edit -> Paste the details into a new row. 
 
 ### Bookmark an external fic to AO3
 
