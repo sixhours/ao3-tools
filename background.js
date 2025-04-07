@@ -3,6 +3,12 @@ const ao3SingleFic = ao3Prefix + 'works/';
 const ao3Stats = ao3Prefix + 'users/';
 
 chrome.action.onClicked.addListener( ( tab ) => {
+	if ( tab.url.startsWith( ao3Prefix ) ) {
+		chrome.scripting.executeScript( {
+			files: [ 'helpers.js' ],
+			target: { tabId: tab.id },
+		} );
+	}
 	if ( tab.url.startsWith( ao3SingleFic ) ) {
 		chrome.scripting.executeScript( {
 			files: [ 'copy-fic-details.js' ],

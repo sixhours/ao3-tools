@@ -25,7 +25,6 @@
 		{
 			"matches": [ "https://archiveofourown.org/users/*/stats*", "https://archiveofourown.org/works/*" ],
 			"css": [ "style.css" ],
-			"js": [ "helpers.js" ],
 			"run_at": "document_end"
 		}
 	]
