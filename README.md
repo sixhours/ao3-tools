@@ -35,3 +35,6 @@ This Chrome browser extension does three things:
 2. Click the AO3T button in your toolbar.
 3. The external bookmark pop-up will appear so you can fill out the remaining details and save your bookmark.
 
+## Legalities
+
+This extension is not affiliated with or endorsed by the Archive of Our Own or the Organization for Transformative Works. It is a personal project created for my own use and shared with the community. Use at your own risk.
