@@ -16,25 +16,25 @@ This Chrome browser extension does three things:
 4. Activate the extension and click "Details".
 5. Click "Pin to toolbar" to show the icon in your browser tools.
 
-## Check your stats
+### Check your stats
 
 1. With the extension enabled, visit your AO3 stats page at `https://archiveofourown.org/users/[your-user]/stats` replacing [your-user] with your AO3 user.
 2. Click the AO3T button in your browser toolbar. On the initial visit, your fics and their data will be loaded into browser storage.
 3. When you want to check for changes, visit the stats page and click the AO3T button. You'll see notices in the bottom left corner of your browser listing the fics that have changed and their stats.
 
-## Copy a fic details for spreadsheet entry
+### Copy a fic details for spreadsheet entry
 
 1. View a single fic on AO3, like https://archiveofourown.org/works/59396569/chapters/151475593.
 2. Click the AO3T button in your browser toolbar.
 3. You'll see a notice in the bottom left corner of the browser confirming the fic's title, author, word count, tags, and other details have been copied to the clipboard.
 4. Go to your fic-tracking spreadsheet ([Feel free to use my template](https://docs.google.com/spreadsheets/d/1lpPIOWiQ32RmaGQ6j5KGIdUqAHowMujEucpRo6kwX0g/edit?gid=1336247201#gid=1336247201)) and Edit -> Paste the details into a new row. 
 
-## Bookmark an external fic to AO3
+### Bookmark an external fic to AO3
 
 1. Visit a fic on an external site (ie. wattpad, ff.net, tumblr, etc.).
 2. Click the AO3T button in your toolbar.
 3. The external bookmark pop-up will appear so you can fill out the remaining details and save your bookmark.
 
-## Legalities
+#### Legalities
 
 This extension is not affiliated with or endorsed by the Archive of Our Own or the Organization for Transformative Works. It is a personal project created for my own use and shared with the community. Use at your own risk.
