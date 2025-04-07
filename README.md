@@ -1,4 +1,4 @@
-## AO3 Tools
+# AO3 Tools
 
 This Chrome browser extension does three things:
 
@@ -8,7 +8,7 @@ This Chrome browser extension does three things:
 
 ## How to use this extension
 
-## Getting started
+### Getting started
 
 1. [Download the extension](https://github.com/sixhours/ao3-tools/archive/refs/heads/main.zip) and unzip it.
 2. In your Chrome browser, go to Chrome -> Settings -> Extensions or simply visit `chrome://extensions/`.
