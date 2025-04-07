@@ -5,23 +5,23 @@ const ao3Stats = ao3Prefix + 'users/';
 chrome.action.onClicked.addListener( ( tab ) => {
 	if ( tab.url.startsWith( ao3Prefix ) ) {
 		chrome.scripting.executeScript( {
-			files: [ 'helpers.js' ],
+			files: [ 'scripts/helpers.js' ],
 			target: { tabId: tab.id },
 		} );
 	}
 	if ( tab.url.startsWith( ao3SingleFic ) ) {
 		chrome.scripting.executeScript( {
-			files: [ 'copy-fic-details.js' ],
+			files: [ 'scripts/copy-fic-details.js' ],
 			target: { tabId: tab.id },
 		} );
 	} else if ( tab.url.startsWith( ao3Stats ) ) {
 		chrome.scripting.executeScript( {
-			files: [ 'check-fic-stats.js' ],
+			files: [ 'scripts/check-fic-stats.js' ],
 			target: { tabId: tab.id },
 		} );
 	} else {
 		chrome.scripting.executeScript( {
-			files: [ 'copy-external-fic-details.js' ],
+			files: [ 'scripts/copy-external-fic-details.js' ],
 			target: { tabId: tab.id },
 		} );
 	}
@@ -32,7 +32,6 @@ chrome.tabs.onActivated.addListener( ( tabId ) => {
 		if ( ! tab || ! tab.url ) {
 			return;
 		}
-
 		if ( tab.url.startsWith( ao3SingleFic ) ) {
 			chrome.action.setTitle( {
 				title: 'Copy Fic Details',
