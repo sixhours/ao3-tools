@@ -8,7 +8,7 @@
 
 	const checkFicStats = function() {
 		let messageContainer = document.querySelector( '#ao3-tools-messages' );
-		// Create message container if it doesn't exist.
+		// Remove and recreate message container.
 		if ( messageContainer ) {
 			messageContainer.remove();
 		}
@@ -55,7 +55,8 @@
 				return;
 			}
 
-			fics.forEach( ( fic ) => {
+			let uniqueFics = [];
+			fics.forEach( fic => {
 				const title = fic.querySelector( 'dt a' )?.textContent;
 				if ( ! title ) {
 					console.log( 'No title found for fic.' );
@@ -66,33 +67,42 @@
 				const bookmarks = fic.querySelector( 'dd.bookmarks' )?.textContent.replace( /,/g, '' ) || 0;
 				const subscriptions = fic.querySelector( 'dd.subscriptions' )?.textContent.replace( /,/g, '' ) || 0;
 
-				// Get current values as integers.
-				const currentHits = parseInt( hits );
-				const currentBookmarks = parseInt( bookmarks );
-				const currentSubscriptions = parseInt( subscriptions );
+				const data = {
+					title: title.trim(),
+					url: url,
+					hits: parseInt( hits ) || 0, // Ensure it's an integer
+					bookmarks: parseInt( bookmarks ) || 0, // Ensure it's an integer
+					subscriptions: parseInt( subscriptions ) || 0 // Ensure it's an integer
+				};
+				// Check if the fic is already recorded.
+				if ( ! uniqueFics.some( existingFic => existingFic.title === data.title ) ) {
+					uniqueFics.push( data );
+				}
+			} );
 
-				const dbRecord = objectStore.get( title );
+			uniqueFics.forEach( ( fic ) => {
+				const dbRecord = objectStore.get( fic.title );
 
 				dbRecord.onsuccess = function( event ) {
 					const record = event.target.result;
 					if ( record ) {
 						// Compare and add message if there are changes.
-						if ( record.hits !== currentHits || record.bookmarks !== currentBookmarks || record.subscriptions !== currentSubscriptions ) {
-							messageText = `<div><strong><a href="${ url }" target="_blank">${ title }</a>:</strong><ul>`;
+						if ( record.hits !== fic.hits || record.bookmarks !== fic.bookmarks || record.subscriptions !== fic.subscriptions ) {
+							messageText = `<div><strong><a href="${ fic.url }" target="_blank">${ fic.title }</a>:</strong><ul>`;
 
-							if ( record.hits !== currentHits ) {
-								messageText += `<li>${ currentHits - record.hits } new hit${
-									( currentHits - record.hits ) !== 1 ? 's' : '' }</li>`;
+							if ( record.hits !== fic.hits ) {
+								messageText += `<li>${ fic.hits - record.hits } new hit${
+									( fic.hits - record.hits ) !== 1 ? 's' : '' }</li>`;
 							}
 
-							if ( record.bookmarks !== currentBookmarks ) {
-								messageText += `<li>${ currentBookmarks - record.bookmarks } new <a href="${ url }/bookmarks" target="_blank">bookmark${ 
-									( currentBookmarks - record.bookmarks ) !== 1 ? 's' : '' }</a></li>`;
+							if ( record.bookmarks !== fic.bookmarks ) {
+								messageText += `<li>${ fic.bookmarks - record.bookmarks } new <a href="${ fic.url }/bookmarks" target="_blank">bookmark${ 
+									( fic.bookmarks - record.bookmarks ) !== 1 ? 's' : '' }</a></li>`;
 							}
 
-							if ( record.subscriptions !== currentSubscriptions ) {
-								messageText += `<li>${ currentSubscriptions - record.subscriptions } new subscription${
-									( currentSubscriptions - record.subscriptions ) !== 1 ? 's' : '' }</a></li>`;
+							if ( record.subscriptions !== fic.subscriptions ) {
+								messageText += `<li>${ fic.subscriptions - record.subscriptions } new subscription${
+									( fic.subscriptions - record.subscriptions ) !== 1 ? 's' : '' }</a></li>`;
 							}
 
 							messageText += '</ul></div>';
@@ -103,7 +113,7 @@
 					}
 
 					// Update the database with new values
-					setFicStats( title, currentSubscriptions, currentBookmarks, currentHits )
+					setFicStats( fic.title, fic.subscriptions, fic.bookmarks, fic.hits )
 						.catch( ( error ) => console.log( error ) );
 				};
 				dbRecord.onerror = function( event ) {
