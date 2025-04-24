@@ -4,14 +4,11 @@
 	justify-content: flex-end;
 	gap: 10px; /* Space between messages */
 	position: fixed;
+	z-index: 1000;
 	bottom: 10px;
 	left: 10px;
-	z-index: 1000;
 	width: 300px;
-	height: 100%;
 	overflow: hidden;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 .ao3-tools-message {
