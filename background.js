@@ -1,22 +1,28 @@
-const ao3Prefix = 'https://archiveofourown.org/';
-const ao3SingleFic = ao3Prefix + 'works/';
-const ao3Stats = ao3Prefix + 'users/';
+const ao3Prefix = new RegExp( /^https:\/\/archiveofourown.org\//, 'gm' );
+const ao3SingleFic = new RegExp( /^https:\/\/archiveofourown.org\/works\/[0-9]+\/chapters\/[0-9]+/, 'gm' );
+const ao3Bookmarks = new RegExp( /^https:\/\/archiveofourown.org\/users\/[a-zA-Z0-9_]+\/bookmarks/, 'gm' );
+const ao3Stats = new RegExp( /^https:\/\/archiveofourown.org\/users\/[a-zA-Z0-9_]+\/stats/, 'gm' );
 
 chrome.action.onClicked.addListener( ( tab ) => {
-	if ( tab.url.startsWith( ao3Prefix ) ) {
+	if ( tab.url.match( ao3Prefix ) ) {
 		chrome.scripting.executeScript( {
 			files: [ 'scripts/helpers.js' ],
 			target: { tabId: tab.id },
 		} );
 	}
-	if ( tab.url.startsWith( ao3SingleFic ) ) {
+	if ( tab.url.match( ao3SingleFic ) ) {
 		chrome.scripting.executeScript( {
 			files: [ 'scripts/copy-fic-details.js' ],
 			target: { tabId: tab.id },
 		} );
-	} else if ( tab.url.startsWith( ao3Stats ) ) {
+	} else if ( tab.url.match( ao3Stats ) ) {
 		chrome.scripting.executeScript( {
 			files: [ 'scripts/check-fic-stats.js' ],
+			target: { tabId: tab.id },
+		} );
+	} else if ( tab.url.match( ao3Bookmarks ) ) {
+		chrome.scripting.executeScript( {
+			files: [ 'scripts/download-fic-bookmarks.js' ],
 			target: { tabId: tab.id },
 		} );
 	} else {
@@ -25,30 +31,4 @@ chrome.action.onClicked.addListener( ( tab ) => {
 			target: { tabId: tab.id },
 		} );
 	}
-} );
-
-chrome.tabs.onActivated.addListener( ( tabId ) => {
-	chrome.tabs.get( tabId.tabId, ( tab ) => {
-		if ( ! tab || ! tab.url ) {
-			return;
-		}
-		if ( tab.url.startsWith( ao3SingleFic ) ) {
-			chrome.action.setTitle( {
-				title: 'Copy Fic Details',
-				tabId: tab.id,
-			} );
-			return;
-		} else if ( tab.url.startsWith( ao3Prefix ) ) {
-			chrome.action.setTitle( {
-				title: 'AO3 Tools',
-				tabId: tab.id,
-			} );
-			return;
-		} else {
-			chrome.action.setTitle( {
-				title: 'Bookmark External Fic',
-				tabId: tab.id,
-			} );
-		}
-	} );
 } );
