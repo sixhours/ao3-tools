@@ -1,5 +1,5 @@
 const ao3Prefix = new RegExp( /^https:\/\/archiveofourown.org\//, 'gm' );
-const ao3SingleFic = new RegExp( /^https:\/\/archiveofourown.org\/works\/[0-9]+\/chapters\/[0-9]+/, 'gm' );
+const ao3SingleFic = new RegExp( /^https:\/\/archiveofourown.org\/works\/[0-9]+/, 'gm' );
 const ao3Bookmarks = new RegExp( /^https:\/\/archiveofourown.org\/users\/[a-zA-Z0-9_]+\/bookmarks/, 'gm' );
 const ao3Stats = new RegExp( /^https:\/\/archiveofourown.org\/users\/[a-zA-Z0-9_]+\/stats/, 'gm' );
 
