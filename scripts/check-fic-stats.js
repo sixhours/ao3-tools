@@ -29,6 +29,7 @@
 				objectStore.createIndex( 'subscriptions', 'subscriptions', { unique: false } );
 				objectStore.createIndex( 'bookmarks', 'bookmarks', { unique: false } );
 				objectStore.createIndex( 'hits', 'hits', { unique: false } );
+				objectStore.createIndex( 'kudos', 'kudos', { unique: false } );
 				console.log( `Object store ${ objectStoreName } created.` );
 			}
 		}
@@ -66,13 +67,15 @@
 				const hits = fic.querySelector( 'dd.hits' )?.textContent.replace( /,/g, '' ) || 0;
 				const bookmarks = fic.querySelector( 'dd.bookmarks' )?.textContent.replace( /,/g, '' ) || 0;
 				const subscriptions = fic.querySelector( 'dd.subscriptions' )?.textContent.replace( /,/g, '' ) || 0;
+				const kudos = fic.querySelector( 'dd.kudos' )?.textContent.replace( /,/g, '' ) || 0;
 
 				const data = {
 					title: title.trim(),
 					url: url,
 					hits: parseInt( hits ) || 0, // Ensure it's an integer
 					bookmarks: parseInt( bookmarks ) || 0, // Ensure it's an integer
-					subscriptions: parseInt( subscriptions ) || 0 // Ensure it's an integer
+					subscriptions: parseInt( subscriptions ) || 0, // Ensure it's an integer
+					kudos: parseInt( kudos ) || 0, // Ensure it's an integer
 				};
 				// Check if the fic is already recorded.
 				if ( ! uniqueFics.some( existingFic => existingFic.title === data.title ) ) {
@@ -87,7 +90,7 @@
 					const record = event.target.result;
 					if ( record ) {
 						// Compare and add message if there are changes.
-						if ( record.hits !== fic.hits || record.bookmarks !== fic.bookmarks || record.subscriptions !== fic.subscriptions ) {
+						if ( record.hits !== fic.hits || record.bookmarks !== fic.bookmarks || record.subscriptions !== fic.subscriptions || record.kudos !== fic.kudos ) {
 							messageText = `<div><strong><a href="${ fic.url }" target="_blank">${ fic.title }</a>:</strong><ul>`;
 
 							if ( record.hits !== fic.hits ) {
@@ -105,6 +108,11 @@
 									( fic.subscriptions - record.subscriptions ) !== 1 ? 's' : '' }</a></li>`;
 							}
 
+							if ( record.kudos !== fic.kudos ) {
+								messageText += `<li>${ fic.kudos - record.kudos } new kudo${
+									( fic.kudos - record.kudos ) !== 1 ? 's' : '' }</a></li>`;
+							}
+
 							messageText += '</ul></div>';
 
 							const message = createMessage( messageText, true );
@@ -113,7 +121,7 @@
 					}
 
 					// Update the database with new values
-					setFicStats( fic.title, fic.subscriptions, fic.bookmarks, fic.hits )
+					setFicStats( fic.title, fic.subscriptions, fic.bookmarks, fic.hits, fic.kudos )
 						.catch( ( error ) => console.log( error ) );
 				};
 				dbRecord.onerror = function( event ) {
@@ -121,7 +129,7 @@
 				};
 			} );
 
-			function setFicStats( title, subscriptions, bookmarks, hits ) {
+			function setFicStats( title, subscriptions, bookmarks, hits, kudos ) {
 				const db = request.result;
 				if ( ! db || ! db.objectStoreNames.contains( objectStoreName ) ) {
 					console.log( 'Database not initialized.' );
@@ -135,7 +143,8 @@
 					title: title,
 					subscriptions: subscriptions,
 					bookmarks: bookmarks,
-					hits: hits
+					hits: hits,
+					kudos: kudos,
 				};
 
 				return new Promise( ( resolve, reject ) => {
