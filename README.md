@@ -2,7 +2,7 @@
 
 This Chrome browser extension does three things:
 
-1. View changes to hits, subscriptions, and bookmarks on your AO3 Stats page.
+1. View changes to hits, subscriptions, bookmarks, and kudos on your AO3 Stats page.
 2. Copy a fic's details from its AO3 page into CSV format, perfect for pasting into your fic-tracking spreadsheet.
 3. Bookmark an external link to your AO3 bookmarks.
 
